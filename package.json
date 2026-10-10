@@ -1,0 +1,20 @@
+{
+  "name": "proyecto_portafolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "three": "^0.186.0" 
+  }
+}

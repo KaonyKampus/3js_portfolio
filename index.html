@@ -1,0 +1,107 @@
+<!-- HTML5 Document Type Declaration -->
+<!DOCTYPE html>
+<!-- Root HTML element set to English -->
+<html lang="en">
+
+<!-- Head section containing metadata, fonts, and stylesheets -->
+<head>
+    <!-- UTF-8 character encoding -->
+    <meta charset="UTF-8">
+    <!-- Responsive viewport settings for mobile and desktop screens -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Browser tab title -->
+    <title>David Silva</title>
+    <!-- Preconnect to Google Fonts servers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Preconnect with CORS support for faster font loading -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts import for Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN link for social and UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Link to local CSS stylesheet -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="shortcut icon" href="./assets/image.png" type="image/x-icon">
+<!-- End of head section -->
+</head>
+
+<!-- Main document body -->
+<body>
+    <!-- HTML5 Canvas reserved for Three.js WebGL 3D rendering  -->
+    <canvas id="webgl"></canvas>
+
+    <!-- Main container for overlaid 2D user interface -->
+    <div id="ui-container">
+        <!-- Main header title with glowing neon styling -->
+        <h1 id="main-title">DAVID SILVA</h1>
+
+        <!-- Floating label tracking mouse hover on 3D meshes -->
+        <div id="hover-label" class="hidden"></div>
+
+        <!-- Translucent overlay for modal windows -->
+        <div id="modal-overlay" class="hidden">
+            <!-- HUD Sci-Fi floating panel using Glassmorphism -->
+            <section id="content-panel" class="hud-panel">
+                <!-- Close button ('X') in top right corner -->
+                <button id="close-btn" aria-label="Close section">&times;</button>
+
+                <!-- HUD header containing section title and navigation tabs/legends -->
+                <header class="hud-header">
+                    <!-- Dynamic title indicating active section -->
+                    <h3 id="hud-title">SECTION</h3>
+                    <!-- Dynamic navigation container for tab buttons or category legends -->
+                    <nav id="hud-tabs-nav" class="hud-tabs"></nav>
+                </header>
+
+                <!-- Dynamic container where timelines, carousels, or standard content render -->
+                <div id="panel-body" class="hud-body"></div>
+            </section>
+        </div>
+
+        <!-- Fullscreen image lightbox modal viewer -->
+        <div id="image-lightbox" class="hidden">
+            <!-- Close button for image lightbox -->
+            <button id="lightbox-close-btn" aria-label="Close image">&times;</button>
+            <!-- Central wrapper for expanded image and caption -->
+            <div class="lightbox-content">
+                <!-- Expanded image element -->
+                <img id="lightbox-img" src="" alt="Expanded project preview">
+                <!-- Caption paragraph detailing the image -->
+                <p id="lightbox-caption"></p>
+            </div>
+        </div>
+
+        <!-- Footer containing social media links and job role -->
+        <footer id="main-footer">
+            <div class="footer-orbit-container">
+                <!-- Direct link to GitHub profile -->
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon floating-icon" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <!-- Direct link to LinkedIn profile -->
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon floating-icon" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+
+                <!-- Static professional role subtitle -->
+                <h2 class="subtitle-static">SOFTWARE ENGINEER</h2>
+
+                <!-- Direct link to WhatsApp contact -->
+                <a href="https://wa.me/your-number" target="_blank" rel="noopener noreferrer" class="social-icon floating-icon" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <!-- Direct link to Instagram profile -->
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon floating-icon" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ES6 module JavaScript script execution -->
+    <script type="module" src="./main.js"></script>
+<!-- End of document body -->
+</body>
+
+<!-- End of HTML root tag -->
+</html>
