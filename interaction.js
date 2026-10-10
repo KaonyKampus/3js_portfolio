@@ -1,0 +1,95 @@
+import * as THREE from 'three';
+import gsap from 'gsap';
+import { camera } from './scene.js';
+import { CAMERA_Z } from './config.js';
+import { interactiveObjects, getSectionRoot } from './models.js';
+import { renderHudSection } from './ui.js';
+
+export const mouse = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
+const hoverLabelEl = document.getElementById('hover-label');
+
+let activeObject = null;
+export function isModalOpen() {
+    return activeObject !== null;
+}
+
+function closeModal() {
+    const modalOverlay = document.getElementById('modal-overlay');
+    const lightbox = document.getElementById('image-lightbox');
+
+    if (!lightbox.classList.contains('hidden')) {
+        lightbox.classList.add('hidden');
+        return;
+    }
+
+    if (!modalOverlay.classList.contains('hidden')) {
+        modalOverlay.classList.add('hidden');
+        gsap.to(camera.position, {
+            x: 0, y: 0, z: CAMERA_Z,
+            duration: 1.2, ease: 'power2.inOut',
+            onComplete: () => activeObject = null
+        });
+        gsap.to('#main-title, #main-footer', { opacity: 1, duration: 0.8 });
+    }
+}
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' || event.key === 'Esc') {
+        closeModal();
+    }
+});
+
+window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    if (activeObject) return;
+
+    hoverLabelEl.style.left = `${event.clientX}px`;
+    hoverLabelEl.style.top = `${event.clientY}px`;
+
+    raycaster.setFromCamera(mouse, camera);
+    // true = recursive, so it also checks the child meshes inside each .glb Group
+    const intersects = raycaster.intersectObjects(interactiveObjects, true);
+
+    if (intersects.length > 0) {
+        const root = getSectionRoot(intersects[0].object);
+        document.body.style.cursor = 'pointer';
+        hoverLabelEl.textContent = root.userData.label;
+        hoverLabelEl.classList.remove('hidden');
+    } else {
+        document.body.style.cursor = 'crosshair';
+        hoverLabelEl.classList.add('hidden');
+    }
+});
+
+window.addEventListener('click', (event) => {
+    if (activeObject) return;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(interactiveObjects, true);
+
+    if (intersects.length > 0) {
+        const clickedMesh = getSectionRoot(intersects[0].object);
+        activeObject = clickedMesh;
+        hoverLabelEl.classList.add('hidden');
+        renderHudSection(clickedMesh.userData.section);
+
+        gsap.to(camera.position, {
+            x: clickedMesh.position.x, y: clickedMesh.position.y, z: clickedMesh.position.z + 3.5,
+            duration: 1.2, ease: 'power2.inOut',
+            onComplete: () => document.getElementById('modal-overlay').classList.remove('hidden')
+        });
+
+        gsap.to('#main-title, #main-footer', { opacity: 0, duration: 0.6 });
+    }
+});
+
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-overlay' || e.target.id === 'close-btn') {
+        closeModal();
+    }
+});
