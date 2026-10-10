@@ -20,6 +20,7 @@ function applyPalette(root) {
 }
 
 function createSection({ file, position, scale, section, label }) {
+    const group = new THREE.Group();
     group.position.copy(position);
     group.userData = { section, initialY: position.y, label };
     scene.add(group);
@@ -62,7 +63,6 @@ export const sphereMesh = createSection({
 });
 
 export const interactiveObjects = [cubeMesh, pyramidMesh, sphereMesh];
-
 
 interactiveObjects.forEach((m) => {
     m.userData.faceAngle = Math.atan2(0 - m.position.x, CAMERA_Z - m.position.z);

@@ -50,7 +50,6 @@ window.addEventListener('mousemove', (event) => {
     hoverLabelEl.style.top = `${event.clientY}px`;
 
     raycaster.setFromCamera(mouse, camera);
-    // true = recursive, so it also checks the child meshes inside each .glb Group
     const intersects = raycaster.intersectObjects(interactiveObjects, true);
 
     if (intersects.length > 0) {

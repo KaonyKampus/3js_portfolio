@@ -12,7 +12,6 @@ const mouse3D = new THREE.Vector3();
 const raycasterMouse = new THREE.Raycaster();
 
 const clock = new THREE.Clock();
-
 let modelTime = 0;
 let lastElapsed = 0;
 
@@ -43,6 +42,7 @@ function animate() {
 
     if (!isModalOpen()) {
         modelTime += delta;
+
         cubeMesh.rotation.y = cubeMesh.userData.faceAngle + Math.sin(modelTime * 0.6) * SWAY_BUST;
         pyramidMesh.rotation.y = pyramidMesh.userData.faceAngle + Math.sin(modelTime * 0.6 + 1) * SWAY_LAPTOP;
         sphereMesh.rotation.y -= 0.008;
