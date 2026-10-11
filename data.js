@@ -47,20 +47,28 @@ export const hudData = {
                 type: 'carousel',
                 projects: [
                     {
-                        title: 'Interactive 3D Portfolio',
-                        description: 'Immersive web experience built with Three.js, GSAP animations, and neon Glassmorphism design.',
-                        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-                        tags: ['Three.js', 'GSAP', 'WebGL', 'CSS Glassmorphism'],
-                        demoUrl: '#',
-                        githubUrl: 'https://github.com'
+                        title: 'Periodic Table',
+                        description: 'Resorce to learn periodic table elements',
+                        image: './assets/periodic_table.png',
+                        tags: ['HTML', 'CSS'],
+                        demoUrl: 'https://kaonykampus.github.io/periodic_table/',
+                        githubUrl: 'https://github.com/KaonyKampus/periodic_table'
                     },
                     {
-                        title: 'Three.js & Angular WebGL Scene',
-                        description: 'Tridimensional interactive gallery with calibrated lighting and dynamic polyhedral models.',
-                        image: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80',
+                        title: 'Web blog ',
+                        description: 'Sofware lifecycle',
+                        image: './assets/development_blog.png',
                         tags: ['Angular', 'Three.js', 'TypeScript', 'SCSS'],
-                        demoUrl: '#',
-                        githubUrl: 'https://github.com'
+                        demoUrl: 'https://kaonykampus.github.io/Blog-desarrollo-software/',
+                        githubUrl: 'https://github.com/KaonyKampus/Blog-desarrollo-software'
+                    },
+                                        {
+                        title: 'Poem Collection',
+                        description: 'Personal Writings',
+                        image: './assets/poems.png',
+                        tags: ['Angular', 'Three.js', 'TypeScript', 'CSS'],
+                        demoUrl: 'https://front-kappa-peach.vercel.app/',
+                        githubUrl: 'https://github.com/KaonyKampus/final_frontEnd_project'
                     }
                 ]
             },

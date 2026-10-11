@@ -1,6 +1,6 @@
 export const CAMERA_Z = 8.5;
 
-export const STAR_COUNT = 65000;
+export const STAR_COUNT = 25000;
 
 export const PALETTES = {
     ice:    { body: '#e2e8f0', dark: '#6366f1', light: '#ffffff', glow: '#38bdf8', accent: '#f472b6', glass: '#7dd3fc' },
