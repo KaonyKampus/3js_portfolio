@@ -12,11 +12,13 @@ export const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: tru
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-const pointLight = new THREE.PointLight(0xc084fc, 75, 100);
+const pointLight = new THREE.PointLight(0xfff1e0, 60, 100);   // luz cálida
 pointLight.position.set(6, 6, 8);
-const pointLight2 = new THREE.PointLight(0xa855f7, 50, 100);
+const pointLight2 = new THREE.PointLight(0x7f9bff, 40, 100);  // relleno azul
 pointLight2.position.set(-6, -4, 6);
-scene.add(pointLight, pointLight2, new THREE.AmbientLight(0xffffff, 0.55));
+const sun = new THREE.DirectionalLight(0xffffff, 2.5);        // blanco brillante
+sun.position.set(10, 14, 24);
+scene.add(pointLight, pointLight2, sun, new THREE.AmbientLight(0xffffff, 0.55));
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;

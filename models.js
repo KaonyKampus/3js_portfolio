@@ -41,7 +41,7 @@ function createSection({ file, position, scale, section, label }) {
 export const cubeMesh = createSection({
     file: '/models/about-me.glb',
     position: new THREE.Vector3(-MODEL_SPACING, -0.4, 0.5),
-    scale: MODEL_SCALE,
+    scale: MODEL_SCALE ,
     section: 'about',
     label: 'About Me'
 });
@@ -49,7 +49,7 @@ export const cubeMesh = createSection({
 export const pyramidMesh = createSection({
     file: '/models/projects.glb',
     position: new THREE.Vector3(0, -0.4, 0.5),
-    scale: MODEL_SCALE,
+    scale: MODEL_SCALE * 1.8,
     section: 'projects',
     label: 'Projects'
 });
@@ -57,7 +57,7 @@ export const pyramidMesh = createSection({
 export const sphereMesh = createSection({
     file: '/models/experience.glb',
     position: new THREE.Vector3(MODEL_SPACING, -0.4, 0.5),
-    scale: MODEL_SCALE,
+    scale: MODEL_SCALE * 1.3,
     section: 'experience',
     label: 'Experience'
 });
