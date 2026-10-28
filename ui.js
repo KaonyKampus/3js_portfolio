@@ -165,7 +165,87 @@ if (lightboxCloseBtn) {
     });
 }
 
+
+// ───────────── Projects: 3D ring of framed pieces ─────────────
+let ringKeyHandler = null;
+
+function buildRing(projects, panelBody) {
+    const total = projects.length;
+    const step = total > 1 ? Math.min(360 / total, 42) : 0;   // degrees between frames
+    const radius = 'calc(var(--cw) * 1.6)';                    // ring radius, scales with the frame size
+    let active = 0;
+
+    const framesHTML = projects.map((proj, i) => `
+        <div class="ring-card" data-index="${i}" style="transform: rotateY(${i * step}deg) translateZ(${radius})">
+            <div class="ring-frame">
+                <div class="ring-mat"><img src="${proj.image}" alt="${proj.title}"></div>
+            </div>
+            <div class="ring-plaque">${proj.title}</div>
+        </div>
+    `).join('');
+
+    panelBody.innerHTML = `
+        <div class="ring-wrapper">
+            <div class="ring-stage">
+                <div class="ring" id="ring">${framesHTML}</div>
+                ${total > 1 ? `
+                <button class="ring-arrow ring-prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="ring-arrow ring-next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+            </div>
+            <div class="ring-info" id="ring-info"></div>
+            <div class="ring-dots">${projects.map((_, i) => `<span class="ring-dot" data-index="${i}"></span>`).join('')}</div>
+        </div>
+    `;
+
+    const ring = panelBody.querySelector('#ring');
+    const info = panelBody.querySelector('#ring-info');
+    const cards = panelBody.querySelectorAll('.ring-card');
+    const dots = panelBody.querySelectorAll('.ring-dot');
+
+    function setActive(index) {
+        active = (index + total) % total;
+        ring.style.transform = `translateZ(calc(-1 * ${radius})) rotateY(${-active * step}deg)`;
+        cards.forEach((c, i) => c.classList.toggle('active', i === active));
+        dots.forEach((d, i) => d.classList.toggle('active', i === active));
+        const proj = projects[active];
+        info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap');
+        info.innerHTML = `
+            <h4>${proj.title}</h4>
+            <p>${proj.description}</p>
+            <div class="tech-tags">${proj.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+            <div class="project-actions">
+                <a href="${proj.demoUrl}" target="_blank" rel="noopener noreferrer" class="project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+                <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-btn"><i class="fa-brands fa-github"></i> Code</a>
+            </div>
+        `;
+    }
+
+    cards.forEach((card, i) => card.addEventListener('click', () => {
+        if (i === active) window.openLightbox(projects[i].image, projects[i].title);
+        else setActive(i);
+    }));
+    dots.forEach((d, i) => d.addEventListener('click', () => setActive(i)));
+    const prev = panelBody.querySelector('.ring-prev');
+    const next = panelBody.querySelector('.ring-next');
+    if (prev) prev.addEventListener('click', () => setActive(active - 1));
+    if (next) next.addEventListener('click', () => setActive(active + 1));
+
+    if (ringKeyHandler) window.removeEventListener('keydown', ringKeyHandler);
+    ringKeyHandler = (e) => {
+        if (!document.querySelector('.ring-wrapper') || total < 2) return;
+        if (e.key === 'ArrowRight') setActive(active + 1);
+        if (e.key === 'ArrowLeft') setActive(active - 1);
+    };
+    window.addEventListener('keydown', ringKeyHandler);
+
+    setActive(0);
+}
+
 function renderTabContent(tab, panelBody) {
+    if (tab.type === 'ring') {
+        buildRing(tab.projects, panelBody);
+        return;
+    }
     if (tab.type === 'carousel') {
         panelBody.innerHTML = buildCarouselHTML(tab.projects);
         initCarouselEvents(tab.projects.length);

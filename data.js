@@ -44,7 +44,7 @@ export const hudData = {
             {
                 id: 'web',
                 label: 'Web & 3D',
-                type: 'carousel',
+                type: 'ring',
                 projects: [
                     {
                         title: 'Periodic Table',
@@ -75,7 +75,7 @@ export const hudData = {
             {
                 id: 'java',
                 label: 'Java Backend',
-                type: 'carousel',
+                type: 'ring',
                 projects: [
                     {
                         title: 'Applicant Management System',
