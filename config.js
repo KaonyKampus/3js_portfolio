@@ -17,3 +17,9 @@ export const MODEL_SPACING = 7.5;
 export const SWAY_BUST = 0.9;
 export const SWAY_LAPTOP = 0.5;
 
+// ── Responsive layout of the three figures ──
+// When the screen is taller than this width/height ratio (phones, tablets in portrait)
+// the figures are stacked vertically instead of side by side.
+export const STACK_BREAKPOINT = 1.05;
+export const STACK_SCALE = 0.52;     // figure size multiplier when stacked
+export const STACK_SPACING = 3.8;    // vertical distance between stacked figures

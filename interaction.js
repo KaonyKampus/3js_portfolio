@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { camera } from './scene.js';
-import { CAMERA_Z } from './config.js';
+import { camera, view } from './scene.js';
 import { interactiveObjects, getSectionRoot } from './models.js';
 import { renderHudSection } from './ui.js';
 
@@ -26,9 +25,9 @@ function closeModal() {
     if (!modalOverlay.classList.contains('hidden')) {
         modalOverlay.classList.add('hidden');
         gsap.to(camera.position, {
-            x: 0, y: 0, z: CAMERA_Z,
+            x: 0, y: 0, z: view.z,
             duration: 1.2, ease: 'power2.inOut',
-            onComplete: () => activeObject = null
+            onComplete: () => { activeObject = null; view.locked = false; }
         });
         gsap.to('#main-title, #main-footer', { opacity: 1, duration: 0.8 });
     }
@@ -74,6 +73,7 @@ window.addEventListener('click', (event) => {
     if (intersects.length > 0) {
         const clickedMesh = getSectionRoot(intersects[0].object);
         activeObject = clickedMesh;
+        view.locked = true;
         hoverLabelEl.classList.add('hidden');
         renderHudSection(clickedMesh.userData.section);
 

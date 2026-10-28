@@ -6,34 +6,18 @@ export const hudData = {
             {
                 id: 'profile',
                 label: 'Profile',
-                type: 'standard',
-                content: `
-                    <div class="hud-card">
-                        <div class="about-profile-grid">
-                            <div class="profile-avatar-container" onclick="openLightbox('./assets/david.png', 'David Silva - Profile Photo')" style="cursor: pointer;" title="Click to expand">
-                                <img src="./assets/david.png" alt="David Silva" class="profile-avatar-img">
-                                <div class="image-hover-overlay" style="border-radius: 50%;">
-                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
-                                </div>
-                            </div>
-                            <div class="about-profile-info">
-                                <h4>Software Engineer & Quality Business Analyst</h4>
-                                <p>Software Engineering student at Fundación Universitaria Compensar and Quality Business Analyst / Champion at TCS. Specializing in software architecture, quality assurance (QA), manual functional testing, and full-stack web development.</p>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            {
-                id: 'skills',
-                label: 'Skills',
-                type: 'standard',
-                content: `
-                    <div class="hud-card">
-                        <h4>Languages & Tools</h4>
-                        <p>Java, JavaScript, TypeScript, Angular, Three.js, HTML5/CSS3, Servlets/JSP, MySQL, MariaDB, Git, Jira, IntelliJ, VS Code, and NetBeans.</p>
-                    </div>
-                `
+                type: 'orbit',
+                photo: './assets/David.png',
+                name: 'David Silva',
+                role: 'Software Engineer & Quality Business Analyst',
+                bio: 'Software Engineering student at Fundación Universitaria Compensar and Quality Business Analyst / Champion at TCS. Specializing in software architecture, quality assurance (QA), manual functional testing, and full-stack web development.',
+                // Each group is one orbit ring. Add or remove skills freely.
+                groups: [
+                    { label: 'Languages', color: '#e8ad74', skills: ['Java', 'JavaScript', 'TypeScript', 'HTML5/CSS3'] },
+                    { label: 'Frameworks & Data', color: '#cfe0ff', skills: ['Angular', 'Three.js', 'Servlets/JSP', 'MySQL', 'MariaDB'] },
+                    { label: 'Tools', color: '#c27a3e', skills: ['Git', 'IntelliJ', 'VS Code', 'NetBeans'] },
+                    { label: 'Quality', color: '#9fd8b0', skills: ['Jira', 'Manual QA', 'Agile · Scrum'] }
+                ]
             }
         ]
     },

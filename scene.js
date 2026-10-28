@@ -8,6 +8,9 @@ export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = CAMERA_Z;
 
+// Resting camera distance (models.js adjusts it to the screen shape) and a flag set while a modal is open
+export const view = { z: CAMERA_Z, locked: false };
+
 export const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
