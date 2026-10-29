@@ -440,6 +440,182 @@ function buildOrbit(tab, panelBody) {
     orbitFrame = requestAnimationFrame(frame);
 }
 
+// ───────────── Contact: a letter sealed with wax ─────────────
+// The form sends a POST (JSON) to this address. It must be a serverless function / backend
+// that checks the data and sends the email to you (the email API key stays there, never here).
+const CONTACT_ENDPOINT = '/api/contact';
+
+function renderContact(container, data) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const linksHTML = data.links.map(l => `
+        <a class="ct-link" href="${l.url}" target="_blank" rel="noopener noreferrer">
+            <i class="${l.icon}"></i>${l.label}
+        </a>`).join('');
+
+    container.innerHTML = `
+        <div class="ct-wrapper">
+            <aside class="ct-intro">
+                <div class="ct-kicker">${data.kicker}</div>
+                <h4 class="ct-headline">${data.headline}</h4>
+                <p class="ct-text">${data.text}</p>
+                <div class="ct-links-title">Or find me here</div>
+                <div class="ct-links">${linksHTML}</div>
+                <div class="ct-watermark" aria-hidden="true">DS</div>
+            </aside>
+
+            <div class="ct-stage" id="ct-stage">
+                <form class="ct-paper" id="ct-form" novalidate>
+                    <div class="ct-paper-head">Dear David,</div>
+                    <label class="ct-field">
+                        <span>Your name</span>
+                        <input type="text" name="name" autocomplete="name" maxlength="80">
+                        <em class="ct-err"></em>
+                    </label>
+                    <label class="ct-field">
+                        <span>Your email</span>
+                        <input type="email" name="email" autocomplete="email" maxlength="120">
+                        <em class="ct-err"></em>
+                    </label>
+                    <label class="ct-field">
+                        <span>Your message</span>
+                        <textarea name="message" rows="5" maxlength="1500"></textarea>
+                        <em class="ct-err"></em>
+                    </label>
+                    <input type="text" name="website" class="ct-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <div class="ct-foot">
+                        <div class="ct-status" id="ct-status" role="status" aria-live="polite"></div>
+                        <button type="submit" class="ct-seal">
+                            <span class="ct-seal-disc"><i class="fa-solid fa-paper-plane"></i></span>
+                            <span class="ct-seal-label">Seal &amp; send</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="ct-envelope" aria-hidden="true">
+                    <div class="ct-env-back"></div>
+                    <div class="ct-env-front"></div>
+                    <div class="ct-env-flap"></div>
+                    <div class="ct-env-seal">DS</div>
+                </div>
+
+                <div class="ct-thanks">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h4>Letter sent</h4>
+                    <p>Thanks for writing! I will get back to you soon.</p>
+                    <button type="button" class="ct-again">Write another</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const stage = container.querySelector('#ct-stage');
+    const form = container.querySelector('#ct-form');
+    const status = container.querySelector('#ct-status');
+    const paper = container.querySelector('.ct-paper');
+
+    // ── validation (the server must check again: this one only gives quick feedback) ──
+    const rules = {
+        name: v => v.trim().length >= 2 ? '' : 'Please tell me your name.',
+        email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'That email does not look right.',
+        message: v => v.trim().length >= 10 ? '' : 'A few more words, please (10 characters minimum).'
+    };
+    function validateField(name) {
+        const input = form.elements[name];
+        const field = input.closest('.ct-field');
+        const msg = rules[name](input.value);
+        field.classList.toggle('invalid', !!msg);
+        field.querySelector('.ct-err').textContent = msg;
+        return !msg;
+    }
+    Object.keys(rules).forEach(name => {
+        const input = form.elements[name];
+        input.addEventListener('blur', () => { if (input.value) validateField(name); });
+        input.addEventListener('input', () => {
+            if (input.closest('.ct-field').classList.contains('invalid')) validateField(name);
+        });
+    });
+
+    // ── helpers ──
+    function shake() {
+        paper.classList.remove('shake'); void paper.offsetWidth; paper.classList.add('shake');
+    }
+    function setBusy(busy) {
+        stage.classList.toggle('busy', busy);
+        [...form.elements].forEach(el => { el.disabled = busy; });
+    }
+    async function playSent() {
+        if (reduceMotion) { stage.classList.add('done'); return; }
+        stage.classList.add('s1'); await sleep(650);   // the letter folds into the envelope
+        stage.classList.add('s2'); await sleep(550);   // the flap closes
+        stage.classList.add('s3'); await sleep(600);   // the wax seal is stamped
+        stage.classList.add('s4'); await sleep(950);   // the envelope flies away
+        stage.classList.add('done');
+    }
+
+    // ── submit ──
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (stage.classList.contains('busy')) return;
+
+        const allValid = Object.keys(rules).map(validateField).every(Boolean);
+        if (!allValid) {
+            shake();
+            const firstBad = form.querySelector('.invalid input, .invalid textarea');
+            if (firstBad) firstBad.focus();
+            return;
+        }
+
+        const payload = {
+            name: form.elements.name.value.trim(),
+            email: form.elements.email.value.trim(),
+            message: form.elements.message.value.trim(),
+            website: form.elements.website.value        // hidden trap field: only bots fill it in
+        };
+
+        status.textContent = '';
+        status.classList.remove('error');
+
+        if (payload.website) {          // a bot: act as if it worked, but send nothing
+            setBusy(true);
+            await playSent();
+            return;
+        }
+
+        setBusy(true);
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 12000);
+        try {
+            const res = await fetch(CONTACT_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                signal: controller.signal
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            await playSent();
+        } catch (err) {
+            setBusy(false);
+            status.textContent = 'Something went wrong. Please try again in a moment.';
+            status.classList.add('error');
+            shake();
+        } finally {
+            clearTimeout(timer);
+        }
+    });
+
+    container.querySelector('.ct-again').addEventListener('click', () => {
+        form.reset();
+        form.querySelectorAll('.ct-field').forEach(f => { f.classList.remove('invalid'); f.querySelector('.ct-err').textContent = ''; });
+        stage.classList.remove('s1', 's2', 's3', 's4', 'done');
+        setBusy(false);
+    });
+
+    // desktop: put the cursor in the first field (on touch screens that would pop up the keyboard)
+    if (window.matchMedia('(pointer: fine)').matches) setTimeout(() => form.elements.name.focus(), 450);
+}
+
 function renderTabContent(tab, panelBody) {
     if (tab.type === 'orbit') {
         buildOrbit(tab, panelBody);
@@ -466,6 +642,12 @@ export function renderHudSection(sectionKey) {
 
     contentPanel.className = `hud-panel ${data.modalClass}`;
     hudTitleEl.textContent = data.title;
+
+    if (sectionKey === 'contact') {
+        hudTabsNav.innerHTML = '';
+        renderContact(panelBody, data);
+        return;
+    }
 
     if (sectionKey === 'experience') {
         hudTabsNav.innerHTML = `

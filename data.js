@@ -134,5 +134,18 @@ export const hudData = {
                 desc: 'Undergraduate degree focusing on software development, object-oriented programming, data structures, and web architecture.'
             }
         ]
+    },
+    contact: {
+        title: 'CONTACT',
+        modalClass: 'modal-contact',
+        kicker: 'GET IN TOUCH',
+        headline: 'Leave me a letter',
+        text: 'Have a project, a job opportunity or just want to say hi? Write me a few lines and they will land straight in my inbox.',
+        links: [
+            { label: 'LinkedIn', url: 'https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/', icon: 'fa-brands fa-linkedin-in' },
+            { label: 'GitHub', url: 'https://github.com/KaonyKampus', icon: 'fa-brands fa-github' },
+            { label: 'WhatsApp', url: 'https://wa.me/573213101615', icon: 'fa-brands fa-whatsapp' },
+            { label: 'Instagram', url: 'https://www.instagram.com/ka_escr/', icon: 'fa-brands fa-instagram' }
+        ]
     }
 };

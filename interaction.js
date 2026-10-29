@@ -92,3 +92,16 @@ document.getElementById('modal-overlay').addEventListener('click', (e) => {
         closeModal();
     }
 });
+
+// ── Contact button (footer): opens the contact modal without moving the camera ──
+const contactBtn = document.getElementById('contact-btn');
+if (contactBtn) {
+    contactBtn.addEventListener('click', () => {
+        if (activeObject) return;
+        activeObject = { contact: true };      // any truthy value: blocks hover/click on the 3D figures
+        hoverLabelEl.classList.add('hidden');
+        renderHudSection('contact');
+        document.getElementById('modal-overlay').classList.remove('hidden');
+        gsap.to('#main-title, #main-footer', { opacity: 0, duration: 0.6 });
+    });
+}
