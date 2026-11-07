@@ -77,61 +77,76 @@ export const hudData = {
         title: 'BACKGROUND & EDUCATION',
         modalClass: 'modal-experience',
         items: [
-            {
-                category: 'work',
-                role: 'Seller, Invoice Clerk & Writer',
-                institution: 'TuBici Bike Shop',
-                period: '2020',
-                desc: 'Managed online sales, e-billing, and wrote web blog articles to enhance brand visibility and sales strategies.'
-            },
+            
             {
                 category: 'work',
                 role: 'Customer Service Representative',
                 institution: 'Teleperformance',
                 period: '2021 - 2022',
-                desc: 'Provided multichannel support (calls, email, chat), handling order tracking, fraudulent transaction verification, and marketplace coordination.'
+                desc: 'Provided multichannel support (calls, email, chat), handling order tracking, fraudulent transaction verification, and marketplace coordination.',
+                did: ["Answered customers by phone, email and chat.", "Tracked packages, handled orders and verified fraudulent transactions.", "Coordinated with marketplaces to confirm user orders."],
+                learned: ["Solving problems accurately under time pressure.", "Working across several support channels at once."],
+                skills: ["Multichannel support", "Fraud verification", "Order management"]
             },
             {
                 category: 'edu',
                 role: 'Modern Languages Degree',
                 institution: 'Universidad ECCI',
                 period: '2017 - 2022',
-                desc: 'Higher education degree focused on multi-language acquisition, advanced communication, and linguistic foundations.'
+                desc: 'Higher education degree focused on multi-language acquisition, advanced communication, and linguistic foundations.',
+                did: ["Studied language acquisition and advanced communication."],
+                learned: ["How to communicate clearly across languages and cultures."],
+                skills: ["English C1", "French (basic)", "German (basic)"]
             },
             {
                 category: 'work',
                 role: 'Tech Support & Sales Rep',
                 institution: 'Asurion',
                 period: '2022 - 2024',
-                desc: 'Delivered technical assistance for mobile devices, computers, and TVs, rapidly troubleshooting software and hardware issues.'
+                desc: 'Delivered technical assistance for mobile devices, computers, and TVs, rapidly troubleshooting software and hardware issues.',
+                did: ["Supported customers with phones, tablets, computers and TVs.", "Quickly diagnosed and fixed software and hardware faults."],
+                learned: ["Troubleshooting step by step instead of guessing.", "Explaining technical problems in simple words."],
+                skills: ["Troubleshooting", "Hardware & software support", "Customer focus"]
             },
             {
                 category: 'work',
                 role: 'Tech Advisor',
                 institution: 'Teleperformance',
                 period: '2024 - 2025',
-                desc: 'Integrated Meta Pixel, Conversions API, CRM, and Catalogues across platforms like WordPress, Shopify, and PrestaShop.'
+                desc: 'Integrated Meta Pixel, Conversions API, CRM, and Catalogues across platforms like WordPress, Shopify, and PrestaShop.',
+                did: ["Set up Meta Pixel, Conversions API, catalogues and CRM integrations.", "Worked on WordPress, Shopify and PrestaShop stores."],
+                learned: ["How web platforms exchange data through APIs.", "How tracking and marketing data flow between systems."],
+                skills: ["APIs & integrations", "WordPress", "Shopify", "PrestaShop"]
             },
             {
                 category: 'work',
                 role: 'QA Analyst / Tester',
                 institution: 'Tata Consultancy Services (TCS)',
                 period: 'Jul 2025 - Oct 2025',
-                desc: 'Executed manual functional testing, documented test cases, tracked defects in Jira, and collaborated within Agile Scrum sprints.'
+                desc: 'Executed manual functional testing, documented test cases, tracked defects in Jira, and collaborated within Agile Scrum sprints.',
+                did: ["Ran manual functional tests and wrote test cases.", "Reported and tracked defects in Jira.", "Joined stand-ups and sprint planning in a Scrum team."],
+                learned: ["How an agile team delivers software sprint by sprint.", "Writing bug reports that developers can act on."],
+                skills: ["Manual testing", "Jira", "Scrum", "Test documentation"]
             },
             {
                 category: 'work',
                 role: 'Quality Business Analyst / Champion',
                 institution: 'Tata Consultancy Services (TCS)',
                 period: 'Oct 2025 - Present',
-                desc: 'Managed end-to-end QA processes, coordinated testing resources, aligned business requirements with technical delivery, and led daily Agile status meetings.'
+                desc: 'Managed end-to-end QA processes, coordinated testing resources, aligned business requirements with technical delivery, and led daily Agile status meetings.',
+                did: ["Led QA from requirements to delivery.", "Coordinated testing resources and prioritized defects.", "Ran daily testing and client status meetings."],
+                learned: ["Aligning business requirements with technical delivery.", "Reporting quality status clearly to clients."],
+                skills: ["Requirements analysis", "Defect prioritization", "Leadership", "Jira"]
             },
             {
                 category: 'edu',
                 role: 'Software Engineering',
                 institution: 'Fundación Universitaria Compensar',
                 period: '2024 - Present',
-                desc: 'Undergraduate degree focusing on software development, object-oriented programming, data structures, and web architecture.'
+                desc: 'Undergraduate degree focusing on software development, object-oriented programming, data structures, and web architecture.',
+                did: ["Study software development, object-oriented programming, data structures and web architecture.", "Built this interactive 3D portfolio with Three.js."],
+                learned: ["How to structure code and build web projects from scratch."],
+                skills: ["JavaScript", "Node.js", "HTML / CSS", "Java", "Three.js"]
             }
         ]
     },

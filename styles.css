@@ -1261,15 +1261,18 @@ body, html {
   min-height: 84vh;
   display: flex;
   flex-direction: column;
-  background: rgba(8, 10, 22, 0.55);
+  background: rgba(8, 10, 22, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(194, 122, 62, 0.55);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(194, 122, 62, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(194, 122, 62, 0.12);
 }
 #modal-overlay:has(.modal-experience) {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  background: rgba(4, 5, 12, 0.35);
+  background: rgba(4, 5, 12, 0.12);
 }
+.modal-experience .metro-label, .modal-experience .metro-period { text-shadow: 0 1px 6px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8); }
 .modal-experience #hud-title {
   font-family: Georgia, 'Times New Roman', serif;
   color: var(--cu);
@@ -1286,7 +1289,7 @@ body, html {
 .metro-stage {
   position: relative;
   min-width: 940px;
-  height: clamp(400px, 54vh, 560px);
+  height: clamp(340px, 44vh, 470px);
 }
 .metro-line {
   position: absolute;
@@ -1358,6 +1361,17 @@ body, html {
   padding: 1rem 1.5rem;
   min-height: 118px;
 }
+.metro-detail { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.md-hint { margin-top: 0.5rem; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cu); opacity: 0.9; }
+.md-cols { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 1.6rem; margin-top: 0.7rem; }
+.md-col h5 { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cu); margin-bottom: 0.45rem; }
+.md-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.md-col li { position: relative; padding-left: 1rem; font-size: clamp(0.8rem, 0.95vw, 0.95rem); line-height: 1.4; color: rgba(255,255,255,0.9); }
+.md-col li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 5px; height: 5px; border-radius: 50%; background: var(--c-detail, var(--work)); }
+.metro-detail.edu .md-col li::before { background: var(--edu); }
+.md-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.md-chips span { padding: 0.25rem 0.7rem; border: 1px solid rgba(194,122,62,0.6); border-radius: 999px; font-size: 0.78rem; color: #fff; background: rgba(194,122,62,0.12); }
+@media (max-width: 760px) { .md-cols { grid-template-columns: 1fr; gap: 0.8rem; } }
 .metro-detail.swap { animation: const-card-in 0.35s ease; }
 .metro-detail h4 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.15rem, 1.5vw, 1.5rem); color: var(--cu); margin-bottom: 0.2rem; }
 .metro-detail .institution { font-size: 0.82rem; color: rgba(200, 208, 230, 0.75); margin-bottom: 0.45rem; }

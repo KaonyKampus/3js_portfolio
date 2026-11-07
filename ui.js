@@ -53,26 +53,37 @@ function renderMetro(items, container) {
     const stationEls = container.querySelectorAll('.metro-station');
     const detail = container.querySelector('#metro-detail');
 
-    function setActive(idx) {
+    const list = (arr) => (arr || []).map(t => `<li>${t}</li>`).join('');
+
+    function setActive(idx, expand) {
         const { item } = stations[idx];
+        const open = !!expand && !!(item.did || item.learned || item.skills);
         stationEls.forEach((el, i) => el.classList.toggle('active', i === idx));
-        detail.className = `metro-detail ${item.category} swap`;
+        detail.className = `metro-detail ${item.category} swap ${open ? 'open' : ''}`;
         detail.innerHTML = `
             <h4>${item.role}</h4>
             <div class="institution">${item.institution} (${item.period})</div>
+            ${open ? `
+            <div class="md-cols">
+                <div class="md-col"><h5>What I did</h5><ul>${list(item.did)}</ul></div>
+                <div class="md-col"><h5>What I learned</h5><ul>${list(item.learned)}</ul></div>
+                <div class="md-col"><h5>Skills developed</h5>
+                    <div class="md-chips">${(item.skills || []).map(t => `<span>${t}</span>`).join('')}</div>
+                </div>
+            </div>` : `
             <div class="description">${item.desc}</div>
+            <div class="md-hint">Click a station for the full detail</div>`}
         `;
     }
 
     stationEls.forEach((el, i) => {
-        el.addEventListener('mouseenter', () => setActive(i));
-        el.addEventListener('focus', () => setActive(i));
-        el.addEventListener('click', () => setActive(i));
+        el.addEventListener('focus', () => setActive(i, false));
+        el.addEventListener('click', () => setActive(i, true));
     });
 
     // start on the current position (last station of the work line)
     const current = stations.findIndex(s => s.item.category === 'work' && /present/i.test(s.item.period));
-    setActive(current >= 0 ? current : 0);
+    setActive(current >= 0 ? current : 0, false);
 }
 
 function renderCleanTimeline(items, container) {
