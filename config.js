@@ -1,6 +1,6 @@
 export const CAMERA_Z = 8.5;
 
-export const STAR_COUNT = 35000;
+export const STAR_COUNT = 65000;
 
 export const PALETTES = {
     ice: { body: '#e2e8f0', dark: '#6366f1', light: '#ffffff', glow: '#38bdf8', accent: '#f472b6', glass: '#7dd3fc' },
@@ -19,7 +19,9 @@ export const SWAY_LAPTOP = 0.5;
 
 // ── Responsive layout of the three figures ──
 // When the screen is taller than this width/height ratio (phones, tablets in portrait)
-// the figures are stacked vertically instead of side by side.
+// the figures are not side by side any more: each one gets its own screen and you scroll down to the next.
 export const STACK_BREAKPOINT = 1.05;
-export const STACK_SCALE = 0.52;     // figure size multiplier when stacked
-export const STACK_SPACING = 3.8;    // vertical distance between stacked figures
+export const STACK_FILL = 0.92;        // how much of the screen width a figure may fill (1 = edge to edge)
+export const STACK_GAP = 1.3;          // distance between figures, in screen heights (above 1 = the next figure is fully out of sight)
+export const STACK_HEIGHT = 0.56;      // how much of the screen height a figure may fill
+export const STACK_LIFT = 0.07;        // raises the figures on their screen (fraction of the screen height) so the caption below stays clear

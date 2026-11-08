@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { scene, camera, view } from './scene.js';
-import { PALETTES, ACTIVE_PALETTE, EMISSIVE_STRENGTH, MODEL_SCALE, MODEL_SPACING, CAMERA_Z, STACK_BREAKPOINT, STACK_SCALE, STACK_SPACING } from './config.js';
+import { PALETTES, ACTIVE_PALETTE, EMISSIVE_STRENGTH, MODEL_SCALE, MODEL_SPACING, CAMERA_Z, STACK_BREAKPOINT, STACK_FILL, STACK_HEIGHT, STACK_GAP, STACK_LIFT } from './config.js';
 
 const loader = new GLTFLoader();
 
@@ -34,6 +34,7 @@ function createSection({ file, position, scale, section, label }) {
             applyPalette(gltf.scene);
             group.add(gltf.scene);
             group.userData.model = gltf.scene;
+            applyLayout();   // now that the real size is known, fit it to the screen
         },
         undefined,
         (err) => console.error(`Could not load ${file}`, err)
@@ -67,6 +68,26 @@ export const sphereMesh = createSection({
 
 export const interactiveObjects = [cubeMesh, pyramidMesh, sphereMesh];
 
+// Phones: scales each figure so it fills its screen (limited by width or height) and centres it on its slot
+const boxSize = new THREE.Vector3();
+const boxCenter = new THREE.Vector3();
+function fitToScreen(obj, visW, visH) {
+    const model = obj.userData.model;
+    const rotY = obj.rotation.y;
+    obj.rotation.y = 0;
+    model.scale.setScalar(obj.userData.baseScale);
+    model.position.set(0, 0, 0);
+    obj.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(model);
+    box.getSize(boxSize);
+    box.getCenter(boxCenter);
+    boxCenter.sub(obj.position);                      // centre of the figure relative to its group
+    const f = Math.min((visW * STACK_FILL) / boxSize.x, (visH * STACK_HEIGHT) / boxSize.y);
+    model.scale.setScalar(obj.userData.baseScale * f);
+    model.position.set(-boxCenter.x * f, -boxCenter.y * f, 0);
+    obj.rotation.y = rotY;
+}
+
 // Places the figures for the current screen shape: side by side on wide screens,
 // stacked vertically on tall ones (phones / tablets in portrait).
 export function applyLayout() {
@@ -74,11 +95,22 @@ export function applyLayout() {
     const stacked = aspect < STACK_BREAKPOINT;
     let slots;
 
+    document.documentElement.classList.toggle('stacked', stacked);
+    let visW = 0, visH = 0;
+
     if (stacked) {
-        sizeFactor = STACK_SCALE;
+        // one figure per screen: the figures are one full screen apart and the camera follows the scroll
         view.z = CAMERA_Z;
-        slots = [[0, STACK_SPACING + 0.2], [0, 0.2], [0, -STACK_SPACING + 0.2]];
+        const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+        visH = 2 * (view.z - 0.5) * Math.tan(halfFov);   // world height visible at the figures' depth
+        visW = visH * aspect;
+        sizeFactor = 1;
+        const gap = visH * STACK_GAP;
+        const lift = visH * STACK_LIFT;
+        slots = [[0, gap], [0, 0], [0, -gap]];
+        view.ys = [gap - lift, -lift, -gap - lift, -gap * 2 - lift];   // camera stops: 3 figures + the links screen
     } else {
+        view.ys = [];
         // very short screens (phones held sideways): shrink a little so the title and footer do not cover the figures
         const short = window.innerHeight < 520;
         sizeFactor = short ? 0.72 : 1;
@@ -93,10 +125,18 @@ export function applyLayout() {
         obj.position.set(slots[i][0], slots[i][1], 0.5);
         obj.userData.initialY = slots[i][1];
         obj.userData.faceAngle = Math.atan2(0 - obj.position.x, view.z - obj.position.z);
-        if (obj.userData.model) obj.userData.model.scale.setScalar(obj.userData.baseScale * sizeFactor);
+        const model = obj.userData.model;
+        if (!model) return;
+        if (stacked) {
+            fitToScreen(obj, visW, visH);
+        } else {
+            model.position.set(0, 0, 0);
+            model.scale.setScalar(obj.userData.baseScale * sizeFactor);
+        }
     });
 
     if (!view.locked) camera.position.z = view.z;
+    window.dispatchEvent(new Event('layoutchange'));
 }
 
 applyLayout();

@@ -1,9 +1,10 @@
 import * as THREE from 'three';
-import { scene, camera, renderer } from './scene.js';
+import { scene, camera, renderer, view } from './scene.js';
 import { SWAY_BUST, SWAY_LAPTOP } from './config.js';
 import { updateStars } from './starfield.js';
 import { cubeMesh, pyramidMesh, sphereMesh } from './models.js';
 import { mouse, isModalOpen } from './interaction.js';
+import './scroll.js';
 
 const mainTitleEl = document.getElementById('main-title');
 const socialIcons = document.querySelectorAll('.social-icon');
@@ -25,6 +26,9 @@ function animate() {
     const targetZ = -15;
     const distanceToZ = (targetZ - camera.position.z) / raycasterMouse.ray.direction.z;
     mouse3D.copy(camera.position).add(raycasterMouse.ray.direction.clone().multiplyScalar(distanceToZ));
+
+    // on phones the camera glides to the height that matches the scroll position
+    if (!view.locked) camera.position.y += (view.y - camera.position.y) * (1 - Math.exp(-Math.min(delta, 0.1) * 9));
 
     updateStars(mouse3D, elapsedTime);
 

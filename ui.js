@@ -375,7 +375,7 @@ function buildOrbit(tab, panelBody) {
     const items = [];
     groups.forEach((g, gi) => {
         const els = [...stage.querySelectorAll(`.orb-skill[data-group="${gi}"]`)];
-        els.forEach((el, si) => items.push({ el, gi, name: g.skills[si], base: (si / els.length) * Math.PI * 2 + gi * 0.7, left: false }));
+        els.forEach((el, si) => items.push({ el, nameEl: el.querySelector('.orb-name'), gi, name: g.skills[si], base: (si / els.length) * Math.PI * 2 + gi * 0.7, left: false }));
     });
 
     const phase = groups.map(() => 0);
@@ -425,7 +425,7 @@ function buildOrbit(tab, panelBody) {
         const photoR = photoEl.offsetHeight / 2;
         const rxMax = compact ? W / 2 - 16 : Math.max(W / 2 - 120, 140);
         const ryMax = compact ? H / 2 - 30 : H / 2 - 24;
-        const rxMin = compact ? Math.min(photoR + 30, rxMax - 18 * (n - 1)) : Math.min(W * 0.18, rxMax - 40 * (n - 1));
+        const rxMin = compact ? Math.min(photoR + 26, rxMax - 24 * (n - 1)) : Math.min(W * 0.18, rxMax - 40 * (n - 1));
         const ryMin = compact ? Math.min(photoR + 36, ryMax - 14 * (n - 1)) : Math.max(H * 0.25, photoR + 80);
 
         groups.forEach((_, gi) => {
@@ -443,7 +443,12 @@ function buildOrbit(tab, panelBody) {
             const a = it.base + phase[it.gi];
             const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
             it.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-            const toLeft = x < 0;                      // labels point outwards
+            let toLeft = x < 0;                        // labels point outwards
+            if (compact) {                             // small screens: flip the label inwards when it would leave the stage
+                const w = it.nameEl.offsetWidth + 14;
+                if (toLeft && x - w < -W / 2) toLeft = false;
+                else if (!toLeft && x + w > W / 2) toLeft = true;
+            }
             if (toLeft !== it.left) { it.left = toLeft; it.el.classList.toggle('to-left', toLeft); }
         });
     }

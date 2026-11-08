@@ -9,7 +9,8 @@ export const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window
 camera.position.z = CAMERA_Z;
 
 // Resting camera distance (models.js adjusts it to the screen shape) and a flag set while a modal is open
-export const view = { z: CAMERA_Z, locked: false };
+// y = height the camera should rest at (follows the scroll on phones); ys = the stops of the scroll (one per screen)
+export const view = { z: CAMERA_Z, y: 0, ys: [], locked: false };
 
 export const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);

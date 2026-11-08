@@ -1430,7 +1430,7 @@ body, html {
   .ring-info h4 { font-size: 1.35rem; }
 
   /* about orbit */
-  .orb-stage { min-height: 340px; }
+  .orb-stage { min-height: 460px; }
   .orb-photo { width: 84px; height: 84px; }
   .orb-name-main, .orb-role { display: none; }
   .orb-bottom { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
@@ -1516,9 +1516,21 @@ body, html {
   pointer-events: none;
 }
 .orb-stage.compact .orb-caption { display: block; }
-.orb-stage.compact .orb-name { display: none; }
+/* compact: small names next to the dots, on a soft dark pill so crossing labels stay readable */
+.orb-stage.compact .orb-name {
+  left: 12px; top: -9px;
+  padding: 1px 6px;
+  font-size: 0.64rem;
+  line-height: 1.35;
+  border-radius: 8px;
+  background: rgba(6, 8, 18, 0.72);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+.orb-stage.compact .orb-skill.to-left .orb-name { left: auto; right: 12px; }
+.orb-stage.compact .orb-skill.hot .orb-name { color: #fff; background: rgba(6, 8, 18, 0.95); z-index: 5; }
+.orb-stage.compact .orb-skill.hot { z-index: 6; }
 .orb-stage.compact .orb-name-main, .orb-stage.compact .orb-role { display: none; }
-.orb-stage.compact .orb-dot { width: 14px; height: 14px; left: -7px; top: -7px; }
+.orb-stage.compact .orb-dot { width: 10px; height: 10px; left: -5px; top: -5px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
 
 /* ═════════════════════════ CONTACT ═════════════════════════ */
 /* footer button */
@@ -1761,3 +1773,130 @@ body, html {
   .ct-field { margin-bottom: .4rem; }
   .ct-field textarea { rows: 2; }
 }
+
+/* ═════════════ PORTRAIT SCREENS · one figure per screen, scroll to go on ═════════════ */
+#scroll-track, #links-section { display: none; }
+
+html.stacked {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: none;
+}
+html.stacked body { height: auto; overflow: visible; }
+html.stacked #ui-container { position: fixed; }
+html.stacked #scroll-track { display: block; position: relative; z-index: 0; }
+html.stacked .snap { height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; }
+@supports (height: 100dvh) { html.stacked .snap { height: 100dvh; } }
+
+/* the round icons go away here: they live in the last screen as square buttons */
+html.stacked .footer-orbit-container .social-icon { display: none; }
+html.stacked .subtitle-static { display: none; }
+html.stacked #hover-label { display: none !important; }
+html.stacked #main-title::after {
+  content: 'SOFTWARE ENGINEER';
+  display: block;
+  margin-top: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+html.stacked #main-footer { flex-direction: column; align-items: center; gap: 0.7rem; padding-bottom: 0.4rem; }
+
+#section-hint {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+html.stacked #section-hint { display: flex; }
+.sh-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 14px rgba(168, 85, 247, 0.9);
+}
+.sh-tap { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); }
+.sh-arrow { font-size: 0.9rem; color: var(--accent-purple-light, #c084fc); animation: shBounce 1.6s ease-in-out infinite; }
+@keyframes shBounce { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(6px); opacity: 1; } }
+
+/* last screen */
+html.stacked #links-section {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5.5rem 1.2rem 2rem;
+  opacity: 0;
+  pointer-events: none;
+}
+.ls-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.2rem, 6vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7), 0 0 26px rgba(168, 85, 247, 0.7);
+  text-align: center;
+}
+.ls-sub { margin: 0.5rem 0 1.8rem; font-size: 0.8rem; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.65); text-align: center; }
+.ls-grid {
+  --g: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--g);
+  width: min(100%, 400px);
+}
+.sq-btn {
+  width: calc((100% - 2 * var(--g)) / 3);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 18px;
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.18));
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.sq-btn i { font-size: clamp(1.5rem, 8vw, 2rem); }
+.sq-btn span { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.85); text-align: center; line-height: 1.2; padding: 0 0.3rem; }
+.sq-btn:hover, .sq-btn:active {
+  transform: translateY(-3px);
+  background: rgba(168, 85, 247, 0.28);
+  border-color: var(--accent-purple-light, #c084fc);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.55);
+}
+.sq-btn.sq-contact {
+  background: linear-gradient(145deg, #e8ad74, #c27a3e);
+  border-color: rgba(255, 220, 180, 0.6);
+  color: #2a1608;
+}
+.sq-btn.sq-contact span { color: #2a1608; font-weight: 700; }
+.sq-btn.sq-contact:hover, .sq-btn.sq-contact:active { background: linear-gradient(145deg, #f2bb86, #d58848); box-shadow: 0 0 24px rgba(232, 173, 116, 0.7); }
+
+/* wide portrait tablets: bigger squares */
+@media (min-width: 700px) { .ls-grid { width: min(100%, 520px); } .sq-btn i { font-size: 2.3rem; } .sq-btn span { font-size: 0.78rem; } }
+/* phones held sideways are not "stacked", but keep the safe area clean */

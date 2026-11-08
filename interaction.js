@@ -25,7 +25,7 @@ function closeModal() {
     if (!modalOverlay.classList.contains('hidden')) {
         modalOverlay.classList.add('hidden');
         gsap.to(camera.position, {
-            x: 0, y: 0, z: view.z,
+            x: 0, y: view.y, z: view.z,
             duration: 1.2, ease: 'power2.inOut',
             onComplete: () => { activeObject = null; view.locked = false; }
         });
@@ -93,10 +93,9 @@ document.getElementById('modal-overlay').addEventListener('click', (e) => {
     }
 });
 
-// ── Contact button (footer): opens the contact modal without moving the camera ──
-const contactBtn = document.getElementById('contact-btn');
-if (contactBtn) {
-    contactBtn.addEventListener('click', () => {
+// ── Contact buttons (footer and links screen): open the contact modal without moving the camera ──
+document.querySelectorAll('[data-open-contact]').forEach((btn) => {
+    btn.addEventListener('click', () => {
         if (activeObject) return;
         activeObject = { contact: true };      // any truthy value: blocks hover/click on the 3D figures
         hoverLabelEl.classList.add('hidden');
@@ -104,4 +103,4 @@ if (contactBtn) {
         document.getElementById('modal-overlay').classList.remove('hidden');
         gsap.to('#main-title, #main-footer', { opacity: 0, duration: 0.6 });
     });
-}
+});
