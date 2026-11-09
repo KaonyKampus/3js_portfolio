@@ -28,7 +28,7 @@ function animate() {
     mouse3D.copy(camera.position).add(raycasterMouse.ray.direction.clone().multiplyScalar(distanceToZ));
 
     // on phones the camera glides to the height that matches the scroll position
-    if (!view.locked) camera.position.y += (view.y - camera.position.y) * (1 - Math.exp(-Math.min(delta, 0.1) * 9));
+    if (!view.locked) camera.position.y += (view.y - camera.position.y) * (1 - Math.exp(-Math.min(delta, 0.1) * 14));
 
     updateStars(mouse3D, elapsedTime);
 

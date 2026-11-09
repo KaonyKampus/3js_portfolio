@@ -10,6 +10,9 @@ let shownIndex = -1;
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
+let maxScroll = 0, ticking = false;
+const measure = () => { maxScroll = html.scrollHeight - window.innerHeight; };
+
 function update(snapCamera = false) {
     if (!html.classList.contains('stacked') || view.ys.length < 4) {
         view.y = 0;
@@ -19,7 +22,7 @@ function update(snapCamera = false) {
         return;
     }
 
-    const max = html.scrollHeight - window.innerHeight;
+    const max = maxScroll;
     const p = max > 0 ? clamp(window.scrollY / max, 0, 1) * 3 : 0;   // 0 = about, 1 = projects, 2 = experience, 3 = links
     const i = Math.min(2, Math.floor(p));
     view.y = view.ys[i] + (view.ys[i + 1] - view.ys[i]) * (p - i);
@@ -38,7 +41,13 @@ function update(snapCamera = false) {
     }
 }
 
-window.addEventListener('scroll', () => update(false), { passive: true });
-window.addEventListener('resize', () => update(false));
-window.addEventListener('layoutchange', () => { window.scrollTo(0, 0); update(true); });
+// one update per frame at most (no layout reads while scrolling)
+window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; update(false); });
+}, { passive: true });
+window.addEventListener('resize', () => { measure(); update(false); });
+window.addEventListener('layoutchange', () => { measure(); window.scrollTo(0, 0); update(true); });
+measure();
 update(true);
