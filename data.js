@@ -22,7 +22,7 @@ export const hudData = {
         ]
     },
     projects: {
-        title: 'FEATURED PROJECTS',
+        title: 'PROJECTS',
         modalClass: 'modal-projects',
         tabs: [
             {
@@ -42,7 +42,7 @@ export const hudData = {
                         title: 'Web blog ',
                         description: 'Sofware lifecycle',
                         image: './assets/development_blog.png',
-                        tags: ['Angular', 'Three.js', 'TypeScript', 'SCSS'],
+                        tags: ['HTML', 'CSS'],
                         demoUrl: 'https://kaonykampus.github.io/Blog-desarrollo-software/',
                         githubUrl: 'https://github.com/KaonyKampus/Blog-desarrollo-software'
                     },
@@ -58,16 +58,16 @@ export const hudData = {
             },
             {
                 id: 'java',
-                label: 'Java Backend',
+                label: 'Back-End',
                 type: 'ring',
                 projects: [
                     {
-                        title: 'Applicant Management System',
+                        title: 'Finance Tutor APP',
                         description: 'Web application built with MVC architecture, Java Servlets, JSP views, JPA layer, and MySQL.',
-                        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
+                        image: './assets/financeTutorAPP.jpeg',
                         tags: ['Java Servlets', 'JSP', 'JPA', 'MySQL'],
-                        demoUrl: '#',
-                        githubUrl: 'https://github.com'
+                        demoUrl: 'https://github.com/KaonyKampus/Finance_Tutor_APP',
+                        githubUrl: 'https://github.com/KaonyKampus/Finance_Tutor_APP'
                     }
                 ]
             }
@@ -130,7 +130,7 @@ export const hudData = {
             },
             {
                 category: 'work',
-                role: 'Quality Business Analyst / Champion',
+                role: 'Quality Business Analyst',
                 institution: 'Tata Consultancy Services (TCS)',
                 period: 'Oct 2025 - Present',
                 desc: 'Managed end-to-end QA processes, coordinated testing resources, aligned business requirements with technical delivery, and led daily Agile status meetings.',
@@ -159,8 +159,7 @@ export const hudData = {
         links: [
             { label: 'LinkedIn', url: 'https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/', icon: 'fa-brands fa-linkedin-in' },
             { label: 'GitHub', url: 'https://github.com/KaonyKampus', icon: 'fa-brands fa-github' },
-            { label: 'WhatsApp', url: 'https://wa.me/573213101615', icon: 'fa-brands fa-whatsapp' },
-            { label: 'Instagram', url: 'https://www.instagram.com/ka_escr/', icon: 'fa-brands fa-instagram' }
+            { label: 'WhatsApp', url: 'https://wa.me/573213101615', icon: 'fa-brands fa-whatsapp' }
         ]
     }
 };

@@ -4,33 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Silva</title>
+    <title>David Silva | Software Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="shortcut icon" href="./assets/image.png" type="image/x-icon">
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="./assets/favicon-180.png">
 </head>
 
 <body>
     <canvas id="webgl"></canvas>
 
-    <!-- phones: invisible track that makes the page scrollable (3 figures + the links screen) -->
+
     <div id="scroll-track" aria-hidden="true">
-        <div class="snap"></div><div class="snap"></div><div class="snap"></div><div class="snap"></div>
+        <div class="snap"></div>
+        <div class="snap"></div>
+        <div class="snap"></div>
+        <div class="snap"></div>
     </div>
 
-    <!-- phones: last screen of the scroll, square buttons -->
+
     <section id="links-section" aria-label="Links">
         <h2 class="ls-title">LET'S CONNECT</h2>
         <p class="ls-sub">Find me here or download my CV</p>
         <div class="ls-grid">
-            <a class="sq-btn" href="https://github.com/KaonyKampus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
-            <a class="sq-btn" href="https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
-            <a class="sq-btn" href="https://wa.me/573213101615" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
-            <a class="sq-btn" href="./assets/cv_softare_engineer.pdf" download="CV-David-Silva.pdf"><i class="fa-solid fa-file-arrow-down"></i><span>Download CV</span></a>
-            <button type="button" class="sq-btn sq-contact" data-open-contact><i class="fa-solid fa-envelope"></i><span>Contact</span></button>
+            <a class="sq-btn" href="https://github.com/KaonyKampus" target="_blank" rel="noopener noreferrer"><i
+                    class="fa-brands fa-github"></i><span>GitHub</span></a>
+            <a class="sq-btn" href="https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/" target="_blank"
+                rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
+            <a class="sq-btn" href="https://wa.me/573213101615" target="_blank" rel="noopener noreferrer"><i
+                    class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a class="sq-btn" href="./assets/cv_softare_engineer.pdf" download="CV-David-Silva.pdf"><i
+                    class="fa-solid fa-file-arrow-down"></i><span>Download CV</span></a>
+            <button type="button" class="sq-btn sq-contact" data-open-contact><i
+                    class="fa-solid fa-envelope"></i><span>Contact</span></button>
         </div>
     </section>
 
@@ -62,12 +72,12 @@
 
         <footer id="main-footer">
             <div class="footer-orbit-container">
-                <a href="https://github.com/KaonyKampus" target="_blank" rel="noopener noreferrer" class="social-icon floating-icon"
-                    aria-label="GitHub">
+                <a href="https://github.com/KaonyKampus" target="_blank" rel="noopener noreferrer"
+                    class="social-icon floating-icon" aria-label="GitHub">
                     <i class="fa-brands fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/" target="_blank" rel="noopener noreferrer"
-                    class="social-icon floating-icon" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/david-stiven-silva-velandia-ba3529236/" target="_blank"
+                    rel="noopener noreferrer" class="social-icon floating-icon" aria-label="LinkedIn">
                     <i class="fa-brands fa-linkedin-in"></i>
                 </a>
 
@@ -81,7 +91,8 @@
                     class="social-icon floating-icon" aria-label="Download CV">
                     <i class="fa-solid fa-file-arrow-down"></i>
                 </a>
-                <button type="button" id="contact-btn" data-open-contact class="social-icon floating-icon contact-icon" aria-label="Contact me">
+                <button type="button" id="contact-btn" data-open-contact class="social-icon floating-icon contact-icon"
+                    aria-label="Contact me">
                     <i class="fa-solid fa-envelope"></i>
                     <span class="contact-tip">Contact</span>
                 </button>

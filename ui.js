@@ -2,9 +2,6 @@ import { hudData } from './data.js';
 
 let currentCarouselIndex = 0;
 
-// ───────────── Experience: metro map ─────────────
-// Two lines (work / education). Education stations sit under the work station
-// that started in the same year, so you can see what overlapped with what.
 function renderMetro(items, container) {
     const firstYear = (period) => Number((period.match(/\d{4}/) || [0])[0]);
 
@@ -223,7 +220,7 @@ function initCarouselEvents(projectsCount) {
     }
 }
 
-// The HTML strings above call openLightbox from an inline onclick, so it must stay global
+
 window.openLightbox = function (imageUrl, captionText) {
     const lightbox = document.getElementById('image-lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
@@ -250,7 +247,7 @@ if (lightboxCloseBtn) {
 }
 
 
-// ───────────── Projects: 3D ring of framed pieces ─────────────
+
 let ringKeyHandler = null;
 
 function buildRing(projects, panelBody) {
@@ -325,7 +322,7 @@ function buildRing(projects, panelBody) {
     setActive(0);
 }
 
-// ───────────── About: orbiting skills ─────────────
+
 let orbitFrame = null;
 
 function buildOrbit(tab, panelBody) {
@@ -587,13 +584,13 @@ function renderContact(container, data) {
             name: form.elements.name.value.trim(),
             email: form.elements.email.value.trim(),
             message: form.elements.message.value.trim(),
-            website: form.elements.website.value        // hidden trap field: only bots fill it in
+            website: form.elements.website.value
         };
 
         status.textContent = '';
         status.classList.remove('error');
 
-        if (payload.website) {          // a bot: act as if it worked, but send nothing
+        if (payload.website) {
             setBusy(true);
             await playSent();
             return;
